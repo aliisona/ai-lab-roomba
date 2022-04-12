@@ -157,19 +157,18 @@ class DepthFirstSearch(GoalSearchAgent):
         
         # TODO initiate frontier data structure
         self.frontier = []
-      
         
     def enqueue(self, state: StateNode, cutoff: Union[int, float] = INF):
         """ Add the state to the frontier, unless depth exceeds the cutoff """
         # TODO 
         if state.depth < cutoff: 
-            self.frontier.append(state)
+            self.frontier.append(state) #appends state
 
         
     def dequeue(self) -> StateNode:
         """  Choose, remove, and return the MOST RECENTLY ADDED state from the frontier."""
         # TODO 
-        s = self.frontier.pop()
+        s = self.frontier.pop() #removes the last state
         return s
 
 class BreadthFirstSearch(GoalSearchAgent):
@@ -193,13 +192,13 @@ class BreadthFirstSearch(GoalSearchAgent):
         """ Add the state to the frontier, unless depth exceeds the cutoff """
         # TODO 
         if state.depth < cutoff:
-            self.frontier.append(state)
+            self.frontier.append(state) #add state to frontier
 
         
     def dequeue(self) -> StateNode:
         """  Choose, remove, and return the LEAST RECENTLY ADDED state from the frontier."""
         # TODO 
-        s = self.frontier.pop(0)
+        s = self.frontier.pop(0) #remove the FIRST state
         return s
 
 
@@ -226,20 +225,18 @@ class UniformCostSearch(GoalSearchAgent):
         super().__init__(*args, **kwargs)
         self.frontier = []
 
-
-        
     def enqueue(self, state: StateNode, cutoff: Union[int, float] = INF):
         """ Add the state to the frontier, unless path COST exceeds the cutoff """
         # TODO 
         if state.path_cost < cutoff:
-            heapq.heappush(self.frontier, (state.path_cost, state))
+            heapq.heappush(self.frontier, (state.path_cost, state)) #adds state to heap
 
         
     def dequeue(self) -> StateNode:
         """  Choose, remove, and return the state with LOWEST PATH COST from the frontier."""
         # TODO 
-        s = heapq.heappop(self.frontier)
-        return s
+        s = heapq.heappop(self.frontier) #removes state
+        return s[1] 
 
 
 class GraphSearchAlgorithm(GoalSearchAgent):
@@ -290,7 +287,7 @@ class GraphSearchAlgorithm(GoalSearchAgent):
                     if newState != state.parent and newState != ext_filter: #no backtracking
                         self.enqueue(newState,cutoff) #create new queue
                         self.total_enqueues+=1 #add to update gui
-                        ext_filter.add(state)
+                        ext_filter.add(state) #now extended to add
 
             self.total_extends+=1 #add to update gui
 
