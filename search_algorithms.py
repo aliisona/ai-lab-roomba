@@ -1,6 +1,5 @@
 # Lab 1 (Part 1a and 2a)
-# Name(s):
-# #Hi 
+# Name(s): Alisona Le
 
 from __future__ import annotations
 from typing import List, Collection, Tuple, Callable, Optional, Union, Set, Dict, Type, Iterable
