@@ -69,7 +69,7 @@ class SlidePuzzleState(StateNode):
         The number 0 represents the blank tile. 
         """
 
-        with open(filename, 'r') as file:
+        with open(filename, 'r') as file: #while this file is open
             n = int(file.readline()) #n columns and n rows
 
             tiles=[] #create tiles
@@ -210,7 +210,7 @@ class SlidePuzzleState(StateNode):
         row = self.empty_pos.row
         col = self.empty_pos.col
         
-        return [action for action in (Coordinate(row, col+1), Coordinate(row+1, col), Coordinate(row, col-1), Coordinate(row-1, col))
+        return [action for action in (Coordinate(row, col+1), Coordinate(row+1, col), Coordinate(row, col-1), Coordinate(row-1, col)) #either direction are legal by 1 increment
             if self.is_legal_action(action)]
 
     # Override
