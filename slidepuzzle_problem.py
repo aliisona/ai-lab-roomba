@@ -71,29 +71,27 @@ class SlidePuzzleState(StateNode):
         # TODO read file and return an initial SlidePuzzleState. [COMPLETE]
 
         with open(filename, 'r') as file: #while this file is open
-            n = int(file.readline()) #read line n rows n columns
+            filesize= int(file.readline().strip())
+            tiles = tuple( tuple(int(val) for val in file.readline().split()) for r in range(filesize))
+            empty_pos=Coordinate(0,0)
 
-            tiles = [] #create tiles
-            for x in range(n):
-                tiles.append([int(num) for num in file.readline().split()])
+            #x = row
+            #y = col
 
-            # find empty_pos
-            r_place = 0
-            c_place = 0
-
-            for row in tiles: #check through looking for empty space
+            x=0
+            for row in tiles:
+                y=0
                 for col in row:
-                    if col == 0:
-                        empty_pos = Coordinate(r_place, c_place)
-                        break
-                    c_place += 1 #go to next col
 
-                r_place += 1 #move rows
-                c_place = 0 #when move row--> reset col pos
-            
+                    if(col==0):
+
+                        empty_pos=Coordinate(x,y)
+                        break
+                    y+=1
+                x+=1
             return SlidePuzzleState( 
-                tiles = tuple(tuple(row) for row in tiles), 
-                empty_pos = empty_pos, 
+                tiles = tiles, # tuple of tuple of 0, dummy value
+                empty_pos =empty_pos, # dummy value
                 parent = None,
                 last_action = None,
                 depth = 0,
@@ -211,16 +209,12 @@ class SlidePuzzleState(StateNode):
         return True
     
     # Override
-    def get_all_actions(self) -> Iterable[SlidePuzzleAction]:
+    def get_all_actions(self) -> Iterable[Coordinate]:
         """Return all legal actions at this state."""
-        # TODO implement! This is a good candidate for using yield (generator function) [COMPLETED]
-        # alternatively, return a list, tuple, or use comprehension
 
-        row = self.empty_pos.row
-        col = self.empty_pos.col
-        
-        return [action for action in (Coordinate(row, col+1), Coordinate(row+1, col), Coordinate(row, col-1), Coordinate(row-1, col)) #either direction are legal by 1 increment
-            if self.is_legal_action(action)]
+        # TODO implement! This is a good candidate for using yield (generator function)
+        # alternatively, return a list, tuple, or use comprehension
+        return self.get_surrounding_tiles(self.empty_pos)
 
     # Override
     def describe_last_action(self) -> str:
@@ -257,6 +251,19 @@ class SlidePuzzleState(StateNode):
                 depth = self.depth + 1,
                 path_cost = self.path_cost + 1,
             )
+        
+
+    def get_surrounding_tiles(self, location:Coordinate) -> Iterable[Coordinate]:
+        movableTiles=[]
+        if(location.row!=0):
+            movableTiles.append(Coordinate(location.row-1,location.col))
+        if(location.row!=len(self.tiles)-1):
+            movableTiles.append(Coordinate(location.row+1,location.col))
+        if(location.col!=0):
+            movableTiles.append(Coordinate(location.row,location.col-1))
+        if(location.col!=len(self.tiles)-1):
+            movableTiles.append(Coordinate(location.row,location.col+1))
+        return movableTiles
         
 
     """ You may add additional methods that may be useful! """
