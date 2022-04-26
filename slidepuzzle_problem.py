@@ -170,7 +170,7 @@ class SlidePuzzleState(StateNode):
         The goal of the slide puzzle is to have the empty spot in the 0th row and 0th col,
         and then the rest of the numbered tiles in order down the rows!
         """
-        # TODO implement! [TEST???]
+        # TODO implement! [FINISHED, TEST?]
         n = self.get_size()
         goal = []
 
@@ -194,20 +194,22 @@ class SlidePuzzleState(StateNode):
         # TODO implement! [COMPLETED]
         boundary=self.get_size() #max size
 
+        #current empty pos
         row = self.empty_pos.row
         col = self.empty_pos.col
 
+        #legal cords
         adjCord = [Coordinate(row - 1, col), #left
                     Coordinate(row + 1,col), #right
                     Coordinate(row,   col+1),#top
                     Coordinate(row,   col-1), #down
         ]
-        if action not in adjCord or action.row >=boundary or action.col >=boundary or action.col<0: #check if in array of coords or within boundary 
+
+        if action not in adjCord or action.row >=boundary or action.col >=boundary or action.col<0: #check if in array of legal coords or within boundary 
             return False
 
         return True
     
-
     # Override
     def get_all_actions(self) -> Iterable[SlidePuzzleAction]:
         """Return all legal actions at this state."""
@@ -240,9 +242,18 @@ class SlidePuzzleState(StateNode):
 
         -- action is assumed legal (is_legal_action called before), but a ValueError may be passed for illegal actions if desired.
         """
-       # TODO implement! Remember that this returns a NEW state, and doesn't change this one. [COMPLETED]
+       # TODO implement! Remember that this returns a NEW state, and doesn't change this one. [TEST]
         next_tiles = list(list(row) for row in self.tiles)
         temp = next_tiles[action.row][action.col]
+
+        boundary=self.get_size() #max size
+
+        if action.row >=boundary:
+            action.row=0
+            
+        if action.col >=boundary:
+            action.col=0
+            
         next_tiles[action.row][action.col] = 0
         next_tiles[self.empty_pos.row][self.empty_pos.col] = temp
         
