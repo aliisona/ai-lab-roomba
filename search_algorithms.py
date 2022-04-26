@@ -114,7 +114,7 @@ class TreeSearchAlgorithm(GoalSearchAgent):
         Remember that "tree search" may re-enqueue or re-extend the same state, multiple times.
         """
 
-        #TODO implement!
+        #TODO implement! [COMPLETE]
 
         self.enqueue(initial_state, cutoff) #enqueue initial state
 
@@ -155,7 +155,7 @@ class DepthFirstSearch(GoalSearchAgent):
         """
         super().__init__(*args, **kwargs)
         
-        # TODO initiate frontier data structure
+        # TODO initiate frontier data structure [COMPLETE]
         self.frontier = []
         
     def enqueue(self, state: StateNode, cutoff: Union[int, float] = INF):
@@ -190,14 +190,14 @@ class BreadthFirstSearch(GoalSearchAgent):
         
     def enqueue(self, state: StateNode, cutoff: Union[int, float] = INF):
         """ Add the state to the frontier, unless depth exceeds the cutoff """
-        # TODO 
+        # TODO [COMPLETE]
         if state.depth < cutoff:
             self.frontier.append(state) #add state to frontier
 
         
     def dequeue(self) -> StateNode:
         """  Choose, remove, and return the LEAST RECENTLY ADDED state from the frontier."""
-        # TODO 
+        # TODO [COMPLETE]
         s = self.frontier.pop(0) #remove the FIRST state
         return s
 
@@ -227,14 +227,14 @@ class UniformCostSearch(GoalSearchAgent):
 
     def enqueue(self, state: StateNode, cutoff: Union[int, float] = INF):
         """ Add the state to the frontier, unless path COST exceeds the cutoff """
-        # TODO 
+        # TODO [COMPLETE]
         if state.path_cost < cutoff:
             heapq.heappush(self.frontier, (state.path_cost, state)) #adds state to heap
 
         
     def dequeue(self) -> StateNode:
         """  Choose, remove, and return the state with LOWEST PATH COST from the frontier."""
-        # TODO 
+        # TODO [COMPLETE]
         s = heapq.heappop(self.frontier) #removes state
         return s[1] 
 
@@ -266,7 +266,7 @@ class GraphSearchAlgorithm(GoalSearchAgent):
         """
         ext_filter : Set[StateNode] = set() # Create an empty extended state filter
 
-        #TODO implement! (You may start by copying your TreeSearch's code)
+        #TODO implement! (You may start by copying your TreeSearch's code) [COMPLETE]
         self.enqueue(initial_state, cutoff) #enqueue initial state
 
 

@@ -170,7 +170,7 @@ class SlidePuzzleState(StateNode):
         The goal of the slide puzzle is to have the empty spot in the 0th row and 0th col,
         and then the rest of the numbered tiles in order down the rows!
         """
-        # TODO implement! [FINISHED, TEST?]
+        # TODO implement! [COMPLETE]
         n = self.get_size()
         goal = []
 
