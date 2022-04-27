@@ -82,16 +82,15 @@ class SlidePuzzleState(StateNode):
             for row in tiles:
                 y=0
                 for col in row:
-
                     if(col==0):
-
                         empty_pos=Coordinate(x,y)
                         break
                     y+=1
                 x+=1
+                
             return SlidePuzzleState( 
-                tiles = tiles, # tuple of tuple of 0, dummy value
-                empty_pos =empty_pos, # dummy value
+                tiles = tiles, 
+                empty_pos =empty_pos, 
                 parent = None,
                 last_action = None,
                 depth = 0,
@@ -236,7 +235,7 @@ class SlidePuzzleState(StateNode):
 
         -- action is assumed legal (is_legal_action called before), but a ValueError may be passed for illegal actions if desired.
         """
-       # TODO implement! Remember that this returns a NEW state, and doesn't change this one. [TEST]
+       # TODO implement! Remember that this returns a NEW state, and doesn't change this one. [COMPLETE]
        
         new_tiles = list(list(row) for row in self.tiles)
         temp = new_tiles[action.row][action.col] #show
