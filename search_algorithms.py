@@ -425,8 +425,37 @@ class AnytimeSearchAlgorithm(InformedSearchAgent):
         *Closest according to the agent's heuristic.
         """
         #TODO implement! (You may start by copying your GraphSearch's code)
-        return None
+        ext_filter : Set[StateNode] = set() # Create an empty extended state filter
 
+        #TODO implement! (You may start by copying your TreeSearch's code) [COMPLETE]
+        self.enqueue(initial_state, cutoff) #enqueue initial state
+
+
+        while self.frontier: #while the froniter still has states (self.frontier = True when != 0)
+            state = self.dequeue() # dequeue node
+ 
+            # if ext_filter.includes(state) == False:
+            if state not in ext_filter:
+                if state.is_goal_state(): #return state if goal reached
+                    return state 
+
+                for newState in state.get_all_actions():
+                    if gui_callback_fn(state): #user stops program, break out of while --> return None
+                        break
+                            
+                    newState = state.get_next_state(action=newState)
+
+                    if newState != state.parent and newState != ext_filter: #no backtracking
+                        self.enqueue(newState,cutoff) #create new queue
+                        self.total_enqueues+=1 #add to update gui
+                        ext_filter.add(state) #now extended to add
+
+            self.total_extends+=1 #add to update gui
+
+
+        return state
+
+  
 
 
 # Collection of all the above. If you write other ones, add them here.
