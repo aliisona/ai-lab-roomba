@@ -426,6 +426,10 @@ class AnytimeSearchAlgorithm(InformedSearchAgent):
         """
         #TODO implement! (You may start by copying your GraphSearch's code)
         ext_filter : Set[StateNode] = set() # Create an empty extended state filter
+        best_node = None
+        best_c = INF #heuristic
+        best_h = INF #cost
+
 
         #TODO implement! (You may start by copying your TreeSearch's code) [COMPLETE]
         self.enqueue(initial_state, cutoff) #enqueue initial state
@@ -439,6 +443,11 @@ class AnytimeSearchAlgorithm(InformedSearchAgent):
                 if state.is_goal_state(): #return state if goal reached
                     return state 
 
+                if self.heuristic(state) < best_h or (state.path_cost < best_c and self.heuristic(state) == best_h): #if its the current best: 
+                    best_node = state #this is the best now
+                    best_h = self.heuristic(state)
+                    best_c = state.path_cost 
+                    
                 for newState in state.get_all_actions():
                     if gui_callback_fn(state): #user stops program, break out of while --> return None
                         break
@@ -453,7 +462,7 @@ class AnytimeSearchAlgorithm(InformedSearchAgent):
             self.total_extends+=1 #add to update gui
 
 
-        return state
+        return best_node #returns the best
 
   
 
