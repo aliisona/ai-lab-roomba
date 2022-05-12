@@ -460,8 +460,7 @@ class AnytimeSearchAlgorithm(InformedSearchAgent):
                         ext_filter.add(state) #now extended to add
 
             self.total_extends+=1 #add to update gui
-
-
+            
         return best_node #returns the best
 
   
