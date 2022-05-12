@@ -135,11 +135,38 @@ def spotlessroomba_third_heuristic(state : SpotlessRoombaState)  -> float:
                     
     return h #return da heuristic
 
+def spotlessroomba_fourth_heuristic(state : SpotlessRoombaState)  -> float:
+    #wack hamming time 
+    #find the actual distance ignoring walls to dirty spot using hypothenuse of the dist
+    #loops for every dirty
+
+    h = 0 #heuristic
+
+    for x in range(len(state.dirty_locations)): #define 
+        lowest_cost = INF #any cost would literally be better than infinity                                       
+        closest_dirty = 0                                       
+        dirty_locations = list(state.dirty_locations)          
+        current_pos = dirty_locations.pop(x) 
+
+        while dirty_locations: #while dirty locations still exist >:(((
+            for i in range(len(dirty_locations)): #keep doing this for all of da dirty spots!!
+                hammer = (abs(current_pos.row - dirty_locations[i].row)**2 + abs(current_pos.col - dirty_locations[i].col)**2)**(1/2)   #finds distance from start to evaluated dirty square
+                if hammer < lowest_cost: #rewrite the lowest cost
+                    closest_dirty = i 
+                    lowest_cost = hammer 
+
+            h += lowest_cost #new heuristic num (wowwww!)
+            current_position = dirty_locations.pop(closest_dirty) #new pos reset
+            lowest_cost = INF #reset
+                    
+    return h #return da heuristic
+
 
 # TODO Update heuristic names and functions below. If you make more than two, add them here.
 SPOTLESSROOMBA_HEURISTICS = {"Zero" : zero_heuristic,
                         "Arbitrary": arbitrary_heuristic, 
                         "Hamming": spotlessroomba_first_heuristic,
                         "Manhattan" : spotlessroomba_second_heuristic,
-                        "Wack Manhattan": spotlessroomba_third_heuristic #omg its mine!
+                        "Wack Manhattan": spotlessroomba_third_heuristic, #:-)
+                        "Wack Hammer": spotlessroomba_fourth_heuristic #:-) x2
                         }
