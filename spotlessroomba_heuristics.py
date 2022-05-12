@@ -110,13 +110,16 @@ def spotlessroomba_second_heuristic(state : SpotlessRoombaState)  -> float:
 
 def spotlessroomba_third_heuristic(state : SpotlessRoombaState)  -> float:
     #go to closest dirty location using manhattan dist, then find the next closest dirty location (also using manhat dist)
+    #loops for every dirty
+    #this one is the most efficient (yay!!!) ++ super optimistic (goals) too cause it completely ignores walls and carpet
+    #this is total manhat dist AS long as its the closest tile each time (which it should be ;)!)  
 
     h = 0 #heuristic
 
     for x in range(len(state.dirty_locations)): #define 
-        lowest_cost = INF                                       
+        lowest_cost = INF #any cost would literally be better than this lol                                      
         closest_dirty = 0                                       
-        dirty_locations = list(state.dirty_locations)           
+        dirty_locations = list(state.dirty_locations)          
         current_pos = dirty_locations.pop(x) 
 
         while dirty_locations: #while dirty locations still exist >:(((
@@ -124,7 +127,7 @@ def spotlessroomba_third_heuristic(state : SpotlessRoombaState)  -> float:
                 manhattan = (abs(current_pos.row - dirty_locations[i].row) + abs(current_pos.col - dirty_locations[i].col))   #finds distance from start to evaluated dirty square
                 if manhattan < lowest_cost: #rewrite the lowest cost
                     closest_dirty = i 
-                    lowest_cost = manhattan
+                    lowest_cost = manhattan 
 
             h += lowest_cost #new heuristic num (wowwww!)
             current_position = dirty_locations.pop(closest_dirty) #new pos reset
