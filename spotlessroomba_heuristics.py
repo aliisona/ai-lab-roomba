@@ -113,6 +113,12 @@ def spotlessroomba_third_heuristic(state : SpotlessRoombaState)  -> float:
     #loops for every dirty
     #this one is the most efficient (yay!!!) ++ super optimistic (goals) too cause it completely ignores walls and carpet
     #this is total manhat dist AS long as its the closest tile each time (which it should be ;)!)  
+    
+#This heuristic is admissible because it will always give an optimistic answer. 
+#It takes the manhattan value meaning the shortest possible path while following the square pattern
+#Unlike the previous code it does not reset the current position for every attempt and already has a preplanned route it tries to take
+#It is considerably better than the original as it doesn't have to cycle through every possiblity to find the shortest path from one dirty square to another
+#The heuristic is also much shorter and much more optimal then the first
 
     h = 0 #heuristic
 
@@ -139,6 +145,12 @@ def spotlessroomba_fourth_heuristic(state : SpotlessRoombaState)  -> float:
     #wack hamming time 
     #find the actual distance ignoring walls to dirty spot using hypothenuse of the dist
     #loops for every dirty
+    
+#This heuristic is admissible because it will always give an optimistic answer. 
+#It takes the hamming value meaning the shortest possible path if there were no walls to block your path
+#Unlike the previous code it does not reset the current position for every attempt and already has a preplanned route it tries to take
+#It is considerably better than the original as it doesn't have to cycle through every possiblity to find the shortest path from one dirty square to another
+#The heuristic is also much shorter and much more optimal then the first
 
     h = 0 #heuristic
 
@@ -165,8 +177,8 @@ def spotlessroomba_fourth_heuristic(state : SpotlessRoombaState)  -> float:
 # TODO Update heuristic names and functions below. If you make more than two, add them here.
 SPOTLESSROOMBA_HEURISTICS = {"Zero" : zero_heuristic,
                         "Arbitrary": arbitrary_heuristic, 
-                        "Hamming": spotlessroomba_first_heuristic,
-                        "Manhattan" : spotlessroomba_second_heuristic,
-                        "Wack Manhattan": spotlessroomba_third_heuristic, #:-)
-                        "Wack Hammer": spotlessroomba_fourth_heuristic #:-) x2
+                        "Old Hamming": spotlessroomba_first_heuristic,
+                        "Old Manhattan" : spotlessroomba_second_heuristic,
+                        "Optimal Manhattan": spotlessroomba_third_heuristic, #:-)
+                        "Optimal Hammer": spotlessroomba_fourth_heuristic #:-) x2
                         }
